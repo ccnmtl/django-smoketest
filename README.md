@@ -126,6 +126,10 @@ If your HTTP client makes the request with `application/json` in the
 `Accept:` headers, responses will be JSON objects with the same
 information in a more easily parseable form. [again, TBD later]
 
+QUESTION: I'm thinking about keeping the output simple to parse
+automatically, but maybe we ought to just stick with unittest's
+existing output format instead?
+
 API
 ---
 
@@ -156,4 +160,14 @@ test ever actually commit a transaction?
 
 In your settings, you may define a `SMOKETEST_APPS` variable that
 lists the applications want to run smoke tests from (instead of
-looking through all your applications). 
+looking through all your applications).
+
+Open Questions
+--------------
+
+What other unittest/nose flags, conventions, etc should we support?
+`--failfast`? output verbosity? ability to target or skip specific
+tests in certain cases? Automatic timeouts (a lot of smoke tests
+involve trying to connect to an external service and failing if it
+takes more than a specified period of time)?
+
