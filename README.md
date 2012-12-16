@@ -77,8 +77,8 @@ To your `urlpatterns`.
 
 In your `smoke.py` (or module), you put something like this:
 
-    from smoketests import SmokeTest
-    from smoketests.decorators import slow, rolled_back
+    from smoketest import SmokeTest
+    from smoketest.decorators import slow, rolled_back
     from myapp.models import FooModel
     
     
@@ -112,14 +112,26 @@ or nose, you get the idea), excluding any marked with the `@slow`
 decorator. `GET`ing `http://yourapp/smoketest/slow/` will include
 those tests as well. All tests passing will result in a response like:
 
-    PASS: 3 tests in 1 module [1.2s]
+    PASS
+    test classes: 1
+    tests run: 3
+    tests passed: 3
+    tests failed: 0
+    tests errored: 0
+    time: 1.2s
 
 So you can just check the result for `PASS` if you are calling it from
 a monitoring script or as part of an automated deploy.
 
 If tests fail or error out, you instead get something like:
 
-    FAIL: 2 failures, 1 error, 5 passing tests
+    FAIL
+    test classes: 1
+    tests run: 8
+    tests passed: 5
+    tests failed: 2
+    tests errored: 1
+    time: 3.3s
     [and more info on the failures. TBD later]
 
 If your HTTP client makes the request with `application/json` in the
@@ -160,7 +172,8 @@ test ever actually commit a transaction?
 
 In your settings, you may define a `SMOKETEST_APPS` variable that
 lists the applications want to run smoke tests from (instead of
-looking through all your applications).
+looking through all your applications). (do we want a
+SMOKETEST_SKIP_APPS as well/instead?).
 
 Open Questions
 --------------
