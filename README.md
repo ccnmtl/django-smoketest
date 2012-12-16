@@ -196,7 +196,6 @@ TODO:
 * @slow decorator and view
 * @rolled_back decorator
 * capture stdout/stderr
-* support the full, expected set of assert* methods from unittest
 * I think it only handles `smoke.py` files or `smoke/__init__.py` and
   won't yet find subclasses in submodules like `smoke/foo.py`. 
 * report additional info (exception/tracebacks) on errors
@@ -208,3 +207,4 @@ DONE:
 * run setUp and tearDown methods
 * when tests fail/error, report which ones failed/errored
 * proper module.class.method info on test failures/errors report
+* support the full, expected set of assert* methods from unittest
