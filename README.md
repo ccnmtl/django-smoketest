@@ -184,3 +184,22 @@ tests in certain cases? Automatic timeouts (a lot of smoke tests
 involve trying to connect to an external service and failing if it
 takes more than a specified period of time)?
 
+Progress
+--------
+
+TODO:
+
+* run tests in rolled back transactions
+* JSON output
+* @slow decorator and view
+* @rolled_back decorator
+* when tests fail/error, report which ones failed/errored along with
+  whatever additional info we can (exceptions, tracebacks?)
+* capture stdout/stderr
+* support the full, expected set of assert* methods from unittest
+
+DONE:
+
+* walk INSTALLED_APPLICATIONS and find/run smoke tests
+* report numbers in simple text format
+* run setUp and tearDown methods
