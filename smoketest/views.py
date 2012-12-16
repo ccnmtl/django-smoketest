@@ -50,14 +50,19 @@ def test_class(cls):
             try:
                 getattr(o, d)()
                 if o.failed():
+                    print dir(o)
                     failed += 1
-                    failed_tests.append(d)
+                    failed_tests.append(
+                        o.__class__.__module__ + "."
+                        + o.__class__.__name__ + "." + d)
                     o.reset()
                 else:
                     passed += 1
             except:
                 errored += 1
-                errored_tests.append(d)
+                errored_tests.append(
+                    o.__class__.__module__ + "."
+                    + o.__class__.__name__ + "." + d)
     if hasattr(o, 'tearDown'):
         o.tearDown()
     return run, passed, failed, errored, failed_tests, errored_tests
@@ -122,7 +127,7 @@ def make_errored_report(result_sets):
     for r in result_sets:
         if r.num_tests_errored > 0:
             for f in r.errored:
-                fails.append(f)
+                errors.append(f)
     return "\n".join(["%s errored" % e for e in errors])
 
 

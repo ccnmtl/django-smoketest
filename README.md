@@ -199,7 +199,6 @@ TODO:
 * support the full, expected set of assert* methods from unittest
 * I think it only handles `smoke.py` files or `smoke/__init__.py` and
   won't yet find subclasses in submodules like `smoke/foo.py`. 
-* proper module.class.method info on test failures/errors report
 * report additional info (exception/tracebacks) on errors
 
 DONE:
@@ -208,3 +207,4 @@ DONE:
 * report numbers in simple text format
 * run setUp and tearDown methods
 * when tests fail/error, report which ones failed/errored
+* proper module.class.method info on test failures/errors report
