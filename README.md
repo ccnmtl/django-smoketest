@@ -132,11 +132,13 @@ If tests fail or error out, you instead get something like:
     tests failed: 2
     tests errored: 1
     time: 3.3s
-    [and more info on the failures. TBD later]
+    module1.smoke.DemoTest.test_foo failed
+    module1.smoke.DemoTest.test_bar failed
+    module1.smoke.DemoTest.test_baz errored
 
 If your HTTP client makes the request with `application/json` in the
 `Accept:` headers, responses will be JSON objects with the same
-information in a more easily parseable form. [again, TBD later]
+information in a more easily parseable form. [TBD later]
 
 QUESTION: I'm thinking about keeping the output simple to parse
 automatically, but maybe we ought to just stick with unittest's
@@ -193,15 +195,16 @@ TODO:
 * JSON output
 * @slow decorator and view
 * @rolled_back decorator
-* when tests fail/error, report which ones failed/errored along with
-  whatever additional info we can (exceptions, tracebacks?)
 * capture stdout/stderr
 * support the full, expected set of assert* methods from unittest
 * I think it only handles `smoke.py` files or `smoke/__init__.py` and
   won't yet find subclasses in submodules like `smoke/foo.py`. 
+* proper module.class.method info on test failures/errors report
+* report additional info (exception/tracebacks) on errors
 
 DONE:
 
 * walk INSTALLED_APPLICATIONS and find/run smoke tests
 * report numbers in simple text format
 * run setUp and tearDown methods
+* when tests fail/error, report which ones failed/errored

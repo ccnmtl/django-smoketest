@@ -21,3 +21,6 @@ class SmokeTest(object):
 
     def passed(self):
         return self._status == "PASS"
+
+    def reset(self):
+        self._status = "PASS"
