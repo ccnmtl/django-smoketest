@@ -17,8 +17,8 @@ Smoke tests are tests that are run on a production environment to
 quickly detect major systemic problems. Eg, after you run a deploy,
 you want to quickly check that everything is running properly so you
 can roll back quickly instead if there are problems. Too often, this
-just means visiting the site and clicking around through a few links
-(at best).
+just means visiting the site and manually clicking around through a
+few links (at best).
 
 You probably already have unit tests verifying the correctness of low
 level parts of your code, and integration and acceptance tests running
