@@ -197,6 +197,8 @@ TODO:
   whatever additional info we can (exceptions, tracebacks?)
 * capture stdout/stderr
 * support the full, expected set of assert* methods from unittest
+* I think it only handles `smoke.py` files or `smoke/__init__.py` and
+  won't yet find subclasses in submodules like `smoke/foo.py`. 
 
 DONE:
 
