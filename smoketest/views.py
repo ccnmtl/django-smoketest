@@ -37,7 +37,6 @@ def test_class(cls):
             try:
                 getattr(o, d)()
                 if o.failed():
-                    print "failed one!"
                     failed += 1
                 else:
                     passed += 1
@@ -58,14 +57,12 @@ def test_application(app):
 
     try:
         a = importlib.import_module("%s.smoke" % app)
-        print "successfully imported smoke module for %s" % app
         for name, obj in inspect.getmembers(a, inspect.isclass):
             if not issubclass(obj, SmokeTest):
                 continue
             if name == "SmokeTest":
                 # skip the parent class, which is usually imported
                 continue
-            print name
             num_test_classes += 1
             run, passed, failed, errored = test_class(obj)
             num_tests_run += run
@@ -84,6 +81,7 @@ def test_application(app):
         num_test_classes, num_tests_run,
         num_tests_passed, num_tests_errored,
         num_tests_failed)
+
 
 def index(request):
     result_sets = [test_application(app) for app in settings.INSTALLED_APPS]
