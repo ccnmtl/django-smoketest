@@ -42,12 +42,12 @@ def test_class(cls):
     o = cls()
     failed_tests = []
     errored_tests = []
-    if hasattr(o, 'setUp'):
-        o.setUp()
     for d in dir(o):
         if d.startswith("test_"):
             run += 1
             try:
+                if hasattr(o, 'setUp'):
+                    o.setUp()
                 getattr(o, d)()
                 if o.failed():
                     print dir(o)
@@ -58,13 +58,13 @@ def test_class(cls):
                     o.reset()
                 else:
                     passed += 1
+                if hasattr(o, 'tearDown'):
+                    o.tearDown()
             except:
                 errored += 1
                 errored_tests.append(
                     o.__class__.__module__ + "."
                     + o.__class__.__name__ + "." + d)
-    if hasattr(o, 'tearDown'):
-        o.tearDown()
     return run, passed, failed, errored, failed_tests, errored_tests
 
 
