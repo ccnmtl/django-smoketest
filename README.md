@@ -186,6 +186,22 @@ lists the applications want to run smoke tests from (instead of
 looking through all your applications). (do we want a
 SMOKETEST_SKIP_APPS as well/instead?).
 
+Asserts supported (so far):
+
+* assertEqual(a, b)
+* assertNotEqual(a, b)
+* assertTrue(t)
+* assertFalse(x)
+* assertIs(a, b)
+* assertIsNot(a, b)
+* assertIsNone(x)
+* assertIsNotNone(x)
+* assertIn(a, b)
+* assertNotIn(a, b)
+* assertIsInstance(a, b)
+* assertNotIsInstance(a, b)
+
+
 Open Questions
 --------------
 
@@ -205,7 +221,7 @@ TODO:
 * @rolled_back decorator
 * capture stdout/stderr
 * I think it only handles `smoke.py` files or `smoke/__init__.py` and
-  won't yet find subclasses in submodules like `smoke/foo.py`. 
+  won't yet find subclasses in submodules like `smoke/foo.py`.
 * report additional info (exception/tracebacks) on errors
 * support messages on asserts
 * setUpClass/tearDownClass
