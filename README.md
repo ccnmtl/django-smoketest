@@ -6,7 +6,8 @@ writing documentation for how this code should work before actually
 implementing it. This notice will go away when django-smoketest is
 actually implemented and remotely suitable for real-world use. Until
 then, feel free to offer ideas on the interface, but don't expect to
-be able to use it.
+be able to use it (you can look in the "Progress" section to see
+exactly where I'm at).
 
 Motivation
 ----------
@@ -103,7 +104,7 @@ In your `smoke.py` (or module), you put something like this:
             """
             # do a bunch of slow stuff
             # ...
-            self.assertEquals(foo, bar)
+            self.assertEqual(foo, bar)
 
 Now, if you make a `GET` to `http://yourapp/smoketest/`,
 django-smoketest will go through your code, finding any `smoke`
@@ -118,7 +119,7 @@ those tests as well. All tests passing will result in a response like:
     tests passed: 3
     tests failed: 0
     tests errored: 0
-    time: 1.2s
+    time: 1200.307861328ms
 
 So you can just check the result for `PASS` if you are calling it from
 a monitoring script or as part of an automated deploy.
@@ -131,7 +132,7 @@ If tests fail or error out, you instead get something like:
     tests passed: 5
     tests failed: 2
     tests errored: 1
-    time: 3.3s
+    time: 3300.07861328ms
     module1.smoke.DemoTest.test_foo failed
     module1.smoke.DemoTest.test_bar failed
     module1.smoke.DemoTest.test_baz errored
@@ -145,7 +146,8 @@ information in a more easily parseable form:
      "errored_tests": ["module1.smoke.DemoTest.test_baz"],
      "tests_run": 8, "test_classes": 1, "tests_passed": 5,
      "failed_tests": ["module1.smoke.DemoTest.test_foo",
-     "module1.smoke.DemoTest.test_foo"], "tests_errored": 1}
+     "module1.smoke.DemoTest.test_foo"], "tests_errored": 1,
+     "time": 1.6458759307861328}
 
 QUESTION: I'm thinking about keeping the output simple to parse
 automatically, but maybe we ought to just stick with unittest's
@@ -208,7 +210,6 @@ TODO:
 * support messages on asserts
 * setUpClass/tearDownClass
 * extended assert* methods (listed in smoketest/__init__.py)
-* time test runs and include in output
 
 DONE:
 
@@ -219,3 +220,4 @@ DONE:
 * proper `module.class.method` info on test failures/errors report
 * support the basic expected set of assert* methods from unittest
 * JSON output
+* time test runs and include in output

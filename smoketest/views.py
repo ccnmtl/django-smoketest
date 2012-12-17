@@ -3,6 +3,7 @@ from django.conf import settings
 from django.utils import simplejson
 import inspect
 import importlib
+import time
 from smoketest import SmokeTest, ApplicationTestResultSet
 
 
@@ -69,7 +70,10 @@ def make_errored_report(result_sets):
 
 
 def index(request):
+    start = time.time()
     result_sets = [test_application(app) for app in settings.INSTALLED_APPS]
+    finish = time.time()
+    print start, finish
     all_passed = reduce(lambda x, y: x & y, [r.passed() for r in result_sets])
     num_test_classes = sum([r.num_test_classes for r in result_sets])
     num_tests_run = sum([r.num_tests_run for r in result_sets])
@@ -96,6 +100,7 @@ def index(request):
                                         [r.failed for r in result_sets]),
                     errored_tests=reduce(lambda x, y: x + y,
                                         [r.errored for r in result_sets]),
+                    time=(finish - start) * 1000,
                     )),
             content_type="application/json",
             )
@@ -107,7 +112,8 @@ tests run: %d
 tests passed: %d
 tests failed: %d
 tests errored: %d
+time: %fms
 %s
 %s""" % (status, num_test_classes, num_tests_run, num_tests_passed,
-         num_tests_failed, num_tests_errored, failed_report,
-         errored_report))
+         num_tests_failed, num_tests_errored, (finish - start) * 1000,
+         failed_report, errored_report))
