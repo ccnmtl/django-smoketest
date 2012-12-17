@@ -216,7 +216,6 @@ Progress
 
 TODO:
 
-* run tests in rolled back transactions
 * @slow decorator and view
 * @rolled_back decorator
 * capture stdout/stderr
@@ -225,7 +224,8 @@ TODO:
 * report additional info (exception/tracebacks) on errors
 * support messages on asserts
 * setUpClass/tearDownClass
-* extended assert* methods (listed in smoketest/__init__.py)
+* extended assert* methods (listed in `smoketest/__init__.py`)
+* `SMOKETEST_APPS` (and/or `SMOKETEST_SKIP_APPS`)
 
 DONE:
 
@@ -237,3 +237,4 @@ DONE:
 * support the basic expected set of assert* methods from unittest
 * JSON output
 * time test runs and include in output
+* run tests in a rolled back transaction

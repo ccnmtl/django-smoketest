@@ -1,5 +1,6 @@
-from django.http import HttpResponse
 from django.conf import settings
+from django.db import transaction
+from django.http import HttpResponse
 from django.utils import simplejson
 import inspect
 import importlib
@@ -69,6 +70,7 @@ def make_errored_report(result_sets):
                          [r.errored for r in result_sets])])
 
 
+@transaction.commit_manually
 def index(request):
     start = time.time()
     result_sets = [test_application(app) for app in settings.INSTALLED_APPS]
@@ -85,9 +87,21 @@ def index(request):
         status = "PASS"
     else:
         status = "FAIL"
+    response = HttpResponse(
+        """%s
+test classes: %d
+tests run: %d
+tests passed: %d
+tests failed: %d
+tests errored: %d
+time: %fms
+%s
+%s""" % (status, num_test_classes, num_tests_run, num_tests_passed,
+         num_tests_failed, num_tests_errored, (finish - start) * 1000,
+         failed_report, errored_report))
     if ('HTTP_ACCEPT' in request.META
         and 'application/json' in request.META['HTTP_ACCEPT']):
-        return HttpResponse(
+        response = HttpResponse(
             simplejson.dumps(
                 dict(
                     status=status,
@@ -104,16 +118,5 @@ def index(request):
                     )),
             content_type="application/json",
             )
-    else:
-        return HttpResponse(
-        """%s
-test classes: %d
-tests run: %d
-tests passed: %d
-tests failed: %d
-tests errored: %d
-time: %fms
-%s
-%s""" % (status, num_test_classes, num_tests_run, num_tests_passed,
-         num_tests_failed, num_tests_errored, (finish - start) * 1000,
-         failed_report, errored_report))
+    transaction.rollback()
+    return response
