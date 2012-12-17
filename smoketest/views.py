@@ -10,6 +10,7 @@ def test_class(cls):
     o = cls()
     return o.run()
 
+
 def test_application(app):
     """ should return an ApplicationTestResultSet """
     num_test_classes = 0
@@ -42,7 +43,7 @@ def test_application(app):
     except ImportError:
         # no 'smokes' module for the app
         pass
-    except Exception, e:
+    except:
         # anything else, probably an error in setUp()
         # or tearDown()
         num_tests_errored += 1
@@ -52,25 +53,19 @@ def test_application(app):
         num_tests_failed, failed_tests,
         errored_tests)
 
+
 def make_failed_report(result_sets):
-    fails = []
-    if sum([r.num_tests_failed for r in result_sets]) == 0:
-        return ""
-    for r in result_sets:
-        if r.num_tests_failed > 0:
-            for f in r.failed:
-                fails.append(f)
-    return "\n".join(["%s failed" % f for f in fails])
+    return "\n".join(
+        ["%s failed" % f
+         for f in reduce(lambda x, y: x + y,
+                         [r.failed for r in result_sets])])
+
 
 def make_errored_report(result_sets):
-    errors = []
-    if sum([r.num_tests_errored for r in result_sets]) == 0:
-        return ""
-    for r in result_sets:
-        if r.num_tests_errored > 0:
-            for f in r.errored:
-                errors.append(f)
-    return "\n".join(["%s errored" % e for e in errors])
+    return "\n".join(
+        ["%s errored" % f
+         for f in reduce(lambda x, y: x + y,
+                         [r.errored for r in result_sets])])
 
 
 def index(request):
