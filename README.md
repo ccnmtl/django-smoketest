@@ -208,6 +208,7 @@ TODO:
 * support messages on asserts
 * setUpClass/tearDownClass
 * extended assert* methods (listed in smoketest/__init__.py)
+* time test runs and include in output
 
 DONE:
 
