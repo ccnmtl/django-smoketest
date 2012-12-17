@@ -200,12 +200,14 @@ TODO:
   won't yet find subclasses in submodules like `smoke/foo.py`. 
 * report additional info (exception/tracebacks) on errors
 * support messages on asserts
+* setUpClass/tearDownClass
+* extended assert* methods (listed in smoketest/__init__.py)
 
 DONE:
 
-* walk INSTALLED_APPLICATIONS and find/run smoke tests
+* walk `INSTALLED_APPLICATIONS` and find/run smoke tests
 * report numbers in simple text format
 * run setUp and tearDown methods
 * when tests fail/error, report which ones failed/errored
-* proper module.class.method info on test failures/errors report
+* proper `module.class.method` info on test failures/errors report
 * support the basic expected set of assert* methods from unittest

@@ -2,71 +2,12 @@ from django.http import HttpResponse
 from django.conf import settings
 import inspect
 import importlib
-from smoketest import SmokeTest
-
-
-class ApplicationTestResultSet(object):
-    """ keeps track of:
-    - number of test classes
-    - number of tests run
-    - number of tests passed
-    - number of tests that errored out
-    - number of tests that failed
-    - failed tests
-    - errored tests
-    """
-    def __init__(self, num_test_classes=0, num_tests_run=0,
-                 num_tests_passed=0, num_tests_errored=0,
-                 num_tests_failed=0, failed=None,
-                 errored=None):
-        self.num_test_classes = num_test_classes
-        self.num_tests_run = num_tests_run
-        self.num_tests_passed = num_tests_passed
-        self.num_tests_errored = num_tests_errored
-        self.num_tests_failed = num_tests_failed
-        if failed is None:
-            self.failed = []
-        else:
-            self.failed = failed
-        if errored is None:
-            self.errored = []
-        else:
-            self.errored = errored
-
-    def passed(self):
-        return self.num_tests_passed == self.num_tests_run
+from smoketest import SmokeTest, ApplicationTestResultSet
 
 
 def test_class(cls):
-    run, failed, passed, errored = 0, 0, 0, 0
     o = cls()
-    failed_tests = []
-    errored_tests = []
-    for d in dir(o):
-        if d.startswith("test_"):
-            run += 1
-            try:
-                if hasattr(o, 'setUp'):
-                    o.setUp()
-                getattr(o, d)()
-                if o.failed():
-                    print dir(o)
-                    failed += 1
-                    failed_tests.append(
-                        o.__class__.__module__ + "."
-                        + o.__class__.__name__ + "." + d)
-                    o.reset()
-                else:
-                    passed += 1
-                if hasattr(o, 'tearDown'):
-                    o.tearDown()
-            except:
-                errored += 1
-                errored_tests.append(
-                    o.__class__.__module__ + "."
-                    + o.__class__.__name__ + "." + d)
-    return run, passed, failed, errored, failed_tests, errored_tests
-
+    return o.run()
 
 def test_application(app):
     """ should return an ApplicationTestResultSet """
