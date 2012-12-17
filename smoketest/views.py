@@ -73,7 +73,6 @@ def index(request):
     start = time.time()
     result_sets = [test_application(app) for app in settings.INSTALLED_APPS]
     finish = time.time()
-    print start, finish
     all_passed = reduce(lambda x, y: x & y, [r.passed() for r in result_sets])
     num_test_classes = sum([r.num_test_classes for r in result_sets])
     num_tests_run = sum([r.num_tests_run for r in result_sets])
@@ -86,7 +85,8 @@ def index(request):
         status = "PASS"
     else:
         status = "FAIL"
-    if 'application/json' in request.META['HTTP_ACCEPT']:
+    if ('HTTP_ACCEPT' in request.META
+        and 'application/json' in request.META['HTTP_ACCEPT']):
         return HttpResponse(
             simplejson.dumps(
                 dict(
