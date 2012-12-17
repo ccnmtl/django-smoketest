@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.conf import settings
+from django.utils import simplejson
 import inspect
 import importlib
 from smoketest import SmokeTest, ApplicationTestResultSet
@@ -86,7 +87,25 @@ def index(request):
         status = "PASS"
     else:
         status = "FAIL"
-    return HttpResponse(
+    if 'application/json' in request.META['HTTP_ACCEPT']:
+        return HttpResponse(
+            simplejson.dumps(
+                dict(
+                    status=status,
+                    test_classes=num_test_classes,
+                    tests_run=num_tests_run,
+                    tests_passed=num_tests_passed,
+                    tests_failed=num_tests_failed,
+                    tests_errored=num_tests_errored,
+                    failed_tests=reduce(lambda x, y: x + y,
+                                        [r.failed for r in result_sets]),
+                    errored_tests=reduce(lambda x, y: x + y,
+                                        [r.errored for r in result_sets]),
+                    )),
+            content_type="application/json",
+            )
+    else:
+        return HttpResponse(
         """%s
 test classes: %d
 tests run: %d

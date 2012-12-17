@@ -138,7 +138,14 @@ If tests fail or error out, you instead get something like:
 
 If your HTTP client makes the request with `application/json` in the
 `Accept:` headers, responses will be JSON objects with the same
-information in a more easily parseable form. [TBD later]
+information in a more easily parseable form:
+
+    $ curl -H "Accept: application/json" http://yourapp/smoketest/
+    {"status": "FAIL", "tests_failed": 2,
+     "errored_tests": ["module1.smoke.DemoTest.test_baz"],
+     "tests_run": 8, "test_classes": 1, "tests_passed": 5,
+     "failed_tests": ["module1.smoke.DemoTest.test_foo",
+     "module1.smoke.DemoTest.test_foo"], "tests_errored": 1}
 
 QUESTION: I'm thinking about keeping the output simple to parse
 automatically, but maybe we ought to just stick with unittest's
@@ -192,7 +199,6 @@ Progress
 TODO:
 
 * run tests in rolled back transactions
-* JSON output
 * @slow decorator and view
 * @rolled_back decorator
 * capture stdout/stderr
@@ -211,3 +217,4 @@ DONE:
 * when tests fail/error, report which ones failed/errored
 * proper `module.class.method` info on test failures/errors report
 * support the basic expected set of assert* methods from unittest
+* JSON output
