@@ -1,5 +1,3 @@
-
-
 class SmokeTest(object):
     def __init__(self):
         self._status = "PASS"
@@ -25,7 +23,6 @@ class SmokeTest(object):
                         self.setUp()
                     getattr(self, d)()
                     if self.failed():
-                        print dir(self)
                         failed += 1
                         failed_tests.append(
                             self.__class__.__module__ + "."
