@@ -98,7 +98,9 @@ time: %fms
 %s
 %s""" % (status, num_test_classes, num_tests_run, num_tests_passed,
          num_tests_failed, num_tests_errored, (finish - start) * 1000,
-         failed_report, errored_report))
+         failed_report, errored_report),
+        content_type="text/plain"
+        )
     if ('HTTP_ACCEPT' in request.META
         and 'application/json' in request.META['HTTP_ACCEPT']):
         response = HttpResponse(
