@@ -201,6 +201,9 @@ Asserts supported (so far):
 * assertIsInstance(a, b)
 * assertNotIsInstance(a, b)
 
+All call accepts custom message as the last parameter (msg) just like
+all assert calls in unittest libraries.
+
 
 Open Questions
 --------------
@@ -221,8 +224,7 @@ TODO:
 * capture stdout/stderr
 * I think it only handles `smoke.py` files or `smoke/__init__.py` and
   won't yet find subclasses in submodules like `smoke/foo.py`.
-* report additional info (exception/tracebacks) on errors
-* support messages on asserts
+* report tracebacks on errors
 * setUpClass/tearDownClass
 * extended assert* methods (listed in `smoketest/__init__.py`)
 * `SMOKETEST_APPS` (and/or `SMOKETEST_SKIP_APPS`)
@@ -238,3 +240,6 @@ DONE:
 * JSON output
 * time test runs and include in output
 * run tests in a rolled back transaction
+* report additional info (exception/tracebacks) on errors
+* support messages on asserts
+
