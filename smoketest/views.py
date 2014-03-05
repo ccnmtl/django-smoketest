@@ -58,14 +58,14 @@ def test_application(app):
 
 def make_failed_report(result_sets):
     return "\n\n".join(
-        [f for f in reduce(lambda x, y: x + y,
-                         [r.failed for r in result_sets])])
+        [f for f in reduce(
+            lambda x, y: x + y, [r.failed for r in result_sets])])
 
 
 def make_errored_report(result_sets):
     return "\n\n".join(
-        [f for f in reduce(lambda x, y: x + y,
-                         [r.errored for r in result_sets])])
+        [f for f in reduce(
+            lambda x, y: x + y, [r.errored for r in result_sets])])
 
 
 @transaction.commit_manually
@@ -102,7 +102,7 @@ time: %fms
         content_type="text/plain"
         )
     if ('HTTP_ACCEPT' in request.META
-        and 'application/json' in request.META['HTTP_ACCEPT']):
+            and 'application/json' in request.META['HTTP_ACCEPT']):
         response = HttpResponse(
             simplejson.dumps(
                 dict(
@@ -115,7 +115,7 @@ time: %fms
                     failed_tests=reduce(lambda x, y: x + y,
                                         [r.failed for r in result_sets]),
                     errored_tests=reduce(lambda x, y: x + y,
-                                        [r.errored for r in result_sets]),
+                                         [r.errored for r in result_sets]),
                     time=(finish - start) * 1000,
                     )),
             content_type="application/json",

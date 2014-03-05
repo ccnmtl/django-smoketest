@@ -22,14 +22,15 @@ class SmokeTest(object):
             if d.startswith("test_"):
                 run += 1
                 method_full_name = "%s.%s.%s" % (
-                        self.__class__.__module__, self.__class__.__name__, d)
+                    self.__class__.__module__, self.__class__.__name__, d)
                 try:
                     if hasattr(self, 'setUp'):
                         self.setUp()
                     getattr(self, d)()
                     if self.failed():
                         failed += 1
-                        failed_tests.append(self._FAILED_TEST_FULL_MSG % {
+                        failed_tests.append(
+                            self._FAILED_TEST_FULL_MSG % {
                                 'method_full_name': method_full_name,
                                 'result': 'failed',
                                 'msg': self._msg
@@ -41,7 +42,8 @@ class SmokeTest(object):
                         self.tearDown()
                 except Exception, e:
                     errored += 1
-                    errored_tests.append(self._FAILED_TEST_FULL_MSG % {
+                    errored_tests.append(
+                        self._FAILED_TEST_FULL_MSG % {
                             'method_full_name': method_full_name,
                             'result': 'errored',
                             'msg': self._msg or e.strerror
@@ -96,7 +98,7 @@ class SmokeTest(object):
     def assertNotIn(self, a, b, msg=None):
         if a in b:
             self._status = "FAIL"
-            self._msg = msg or "%a is in %b" %(a, b)
+            self._msg = msg or "%a is in %b" % (a, b)
 
     def assertIsInstance(self, a, b, msg=None):
         if not isinstance(a, b):

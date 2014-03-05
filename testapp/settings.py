@@ -12,4 +12,4 @@ INSTALLED_APPS = (
     'smoketest',
 )
 
-ROOT_URLCONF='urls'
+ROOT_URLCONF = 'urls'
