@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db import transaction
 from django.http import HttpResponse
-from django.utils import simplejson
+import json
 import inspect
 import importlib
 import time
@@ -104,7 +104,7 @@ time: %fms
     if ('HTTP_ACCEPT' in request.META
             and 'application/json' in request.META['HTTP_ACCEPT']):
         response = HttpResponse(
-            simplejson.dumps(
+            json.dumps(
                 dict(
                     status=status,
                     test_classes=num_test_classes,
