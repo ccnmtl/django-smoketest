@@ -240,6 +240,5 @@ DONE:
 * JSON output
 * time test runs and include in output
 * run tests in a rolled back transaction
-* report additional info (exception/tracebacks) on errors
-* support messages on asserts
-
+* report additional info (exception/tracebacks) on errors (Kristijan Mitrovic <kmitrovic>)
+* support messages on asserts (Kristijan Mitrovic <kmitrovic>)
