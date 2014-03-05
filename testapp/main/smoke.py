@@ -64,3 +64,22 @@ class TestSmokeTest(SmokeTest):
     def test_assertNotIsInstance(self):
         a = "foo"
         self.assertNotIsInstance(a, SmokeTest)
+
+
+
+class TestFailedSmokeTests(SmokeTest):
+    CUSTOM_TEST_MSG = "Test failed as it should"
+
+    def setUp(self):
+        self.been_setup = True
+        self.been_toredown = False
+
+    def tearDown(self):
+        self.been_toredown = True
+        self.been_setup = False
+
+    def test_assertTrueWoMsg(self):
+        self.assertTrue(False) # test without message
+
+    def test_assertEqualWMsg(self):
+        self.assertEqual(13, 14, self.CUSTOM_TEST_MSG) # test with message

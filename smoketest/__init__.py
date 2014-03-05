@@ -1,6 +1,9 @@
 class SmokeTest(object):
+    _FAILED_TEST_FULL_MSG = "%(method_full_name)s %(result)s: %(msg)s"
+
     def __init__(self):
         self._status = "PASS"
+        self._msg = ""
 
     def failed(self):
         return self._status == "FAIL"
@@ -18,77 +21,95 @@ class SmokeTest(object):
         for d in dir(self):
             if d.startswith("test_"):
                 run += 1
+                method_full_name = "%s.%s.%s" % (
+                        self.__class__.__module__, self.__class__.__name__, d)
                 try:
                     if hasattr(self, 'setUp'):
                         self.setUp()
                     getattr(self, d)()
                     if self.failed():
                         failed += 1
-                        failed_tests.append(
-                            self.__class__.__module__ + "."
-                            + self.__class__.__name__ + "." + d)
+                        failed_tests.append(self._FAILED_TEST_FULL_MSG % {
+                                'method_full_name': method_full_name,
+                                'result': 'failed',
+                                'msg': self._msg
+                            })
                         self.reset()
                     else:
                         passed += 1
                     if hasattr(self, 'tearDown'):
                         self.tearDown()
-                except:
+                except Exception, e:
                     errored += 1
-                    errored_tests.append(
-                        self.__class__.__module__ + "."
-                        + self.__class__.__name__ + "." + d)
+                    errored_tests.append(self._FAILED_TEST_FULL_MSG % {
+                            'method_full_name': method_full_name,
+                            'result': 'errored',
+                            'msg': self._msg or e.strerror
+                        })
         return run, passed, failed, errored, failed_tests, errored_tests
 
-    def assertEqual(self, a, b):
+    def assertEqual(self, a, b, msg=None):
         if a != b:
             self._status = "FAIL"
+            self._msg = msg or "%s != %s" % (a, b)
 
-    def assertNotEqual(self, a, b):
+    def assertNotEqual(self, a, b, msg=None):
         if a == b:
             self._status = "FAIL"
+            self._msg = msg or "%s == %s" % (a, b)
 
-    def assertTrue(self, t):
+    def assertTrue(self, t, msg=None):
         if not t:
             self._status = "FAIL"
+            self._msg = msg or "%s is not true" % t
 
-    def assertFalse(self, x):
+    def assertFalse(self, x, msg=None):
         if x:
             self._status = "FAIL"
+            self._msg = msg or "%s is not false" % x
 
-    def assertIs(self, a, b):
+    def assertIs(self, a, b, msg=None):
         if not a is b:
             self._status = "FAIL"
+            self._msg = msg or "%s is not %s" % (a, b)
 
-    def assertIsNot(self, a, b):
+    def assertIsNot(self, a, b, msg=None):
         if a is b:
             self._status = "FAIL"
+            self._msg = msg or "%s is %s" % (a, b)
 
-    def assertIsNone(self, x):
+    def assertIsNone(self, x, msg=None):
         if x is not None:
             self._status = "FAIL"
+            self._msg = msg or "%s is not None" % x
 
-    def assertIsNotNone(self, x):
+    def assertIsNotNone(self, x, msg=None):
         if x is None:
             self._status = "FAIL"
+            self._msg = msg or "%s is None" % x
 
-    def assertIn(self, a, b):
+    def assertIn(self, a, b, msg=None):
         if a not in b:
             self._status = "FAIL"
+            self._msg = msg or "%s is not in %s" % (a, b)
 
-    def assertNotIn(self, a, b):
+    def assertNotIn(self, a, b, msg=None):
         if a in b:
             self._status = "FAIL"
+            self._msg = msg or "%a is in %b" %(a, b)
 
-    def assertIsInstance(self, a, b):
+    def assertIsInstance(self, a, b, msg=None):
         if not isinstance(a, b):
             self._status = "FAIL"
+            self._msg = msg or "%a is not an instance of %s" % (a, b)
 
-    def assertNotIsInstance(self, a, b):
+    def assertNotIsInstance(self, a, b, msg=None):
         if isinstance(a, b):
             self._status = "FAIL"
+            self._msg = msg or "%s is an instance of %s" % (a, b)
 
 """
-TODO:
+TODO (while adding msg=None parameter to all calls and process it properly):
 assertRaises(exc, fun, *args, **kwds)	fun(*args, **kwds) raises exc
 assertRaisesRegexp(exc, re, fun, *args, **kwds)	fun(*args, **kwds)
    raises exc and the message matches re	2.7

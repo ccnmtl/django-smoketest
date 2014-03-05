@@ -57,16 +57,14 @@ def test_application(app):
 
 
 def make_failed_report(result_sets):
-    return "\n".join(
-        ["%s failed" % f
-         for f in reduce(lambda x, y: x + y,
+    return "\n\n".join(
+        [f for f in reduce(lambda x, y: x + y,
                          [r.failed for r in result_sets])])
 
 
 def make_errored_report(result_sets):
-    return "\n".join(
-        ["%s errored" % f
-         for f in reduce(lambda x, y: x + y,
+    return "\n\n".join(
+        [f for f in reduce(lambda x, y: x + y,
                          [r.errored for r in result_sets])])
 
 
@@ -95,7 +93,9 @@ tests passed: %d
 tests failed: %d
 tests errored: %d
 time: %fms
+
 %s
+
 %s""" % (status, num_test_classes, num_tests_run, num_tests_passed,
          num_tests_failed, num_tests_errored, (finish - start) * 1000,
          failed_report, errored_report),
