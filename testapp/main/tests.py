@@ -1,5 +1,6 @@
 import json
 
+from django.conf import settings
 from django.test import TestCase
 from django.test.client import Client
 
@@ -9,6 +10,7 @@ from smoketest import SmokeTest
 
 class BasicTest(TestCase):
     def setUp(self):
+        settings.INSTALLED_APPS = ('main', 'smoketest')
         self.c = Client()
 
     def test_basics(self):

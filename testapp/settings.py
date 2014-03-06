@@ -9,6 +9,7 @@ DATABASES = {
 
 INSTALLED_APPS = (
     'main',
+    'exceptionstest',
     'smoketest',
 )
 
