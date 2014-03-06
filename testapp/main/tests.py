@@ -4,6 +4,7 @@ from django.test import TestCase
 from django.test.client import Client
 
 from smoke import TestFailedSmokeTests
+from smoketest import SmokeTest
 
 
 class BasicTest(TestCase):
@@ -53,3 +54,31 @@ class BasicTest(TestCase):
             "main.smoke.TestFailedSmokeTests.test_assertEqualWMsg failed: %s" %
             TestFailedSmokeTests.CUSTOM_TEST_MSG,
             response_obj['failed_tests'])
+
+
+    def test_error(self):
+        " Tests the error case (when we got exception during the smoke test). "
+        exc_msg = 'test exception'
+        fail_msg = 'some other fail test message'
+
+        class TestWithException(SmokeTest):
+            def test_fail(self):
+                self.assertTrue(False, fail_msg)
+            def test_with_exception(self):
+                raise Exception(exc_msg)
+            def dir(self):
+                """ Overvrite dir method so test_fail would be before
+                test_with_exception for sure.
+
+                """
+                return ['test_fail', 'test_with_exception']
+
+        test = TestWithException()
+        (_, _, failed, errored, _, e_tests) = test.run()
+        self.assertEqual(1, failed)
+        self.assertEqual(1, errored)
+        self.assertEqual(errored, len(e_tests))
+        self.assertIn(
+                "TestWithException.test_with_exception errored: %s" % exc_msg,
+                e_tests[0])
+        self.assertNotIn(fail_msg, e_tests[0])
