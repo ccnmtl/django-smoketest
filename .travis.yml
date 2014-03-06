@@ -1,0 +1,16 @@
+language: python
+python:
+  - "2.7"
+before_install:
+# Workaround for a permissions issue with Travis virtual machine images
+# that breaks Python's multiprocessing:
+# https://github.com/travis-ci/travis-cookbooks/issues/155
+  - sudo rm -rf /dev/shm
+  - sudo ln -s /run/shm /dev/shm
+install:
+  - virtualenv ve
+  - ./ve/bin/pip install .
+  - ./ve/bin/pip install flake8
+script:
+  - ./ve/bin/flake8 smoketest
+  - cd testapp && ../ve/bin/python manage.py test
