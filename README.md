@@ -1,6 +1,8 @@
 django-smoketest
 ================
 
+[![Build Status](https://travis-ci.org/ccnmtl/django-smoketest.png)](https://travis-ci.org/ccnmtl/django-smoketest)
+
 PLEASE NOTE: I'm basically doing README-driven development here,
 writing documentation for how this code should work before actually
 implementing it. This notice will go away when django-smoketest is
