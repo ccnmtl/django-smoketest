@@ -46,7 +46,7 @@ class SmokeTest(object):
                         self._FAILED_TEST_FULL_MSG % {
                             'method_full_name': method_full_name,
                             'result': 'errored',
-                            'msg': self._msg or e.strerror
+                            'msg': self._msg or str(e)
                         })
         return run, passed, failed, errored, failed_tests, errored_tests
 
