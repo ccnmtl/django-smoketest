@@ -3,23 +3,23 @@ def _dummy_method(*args, **kwargs):
     pass
 
 
-
 class SmokeTest(object):
     _FAILED_TEST_FULL_MSG = "%(method_full_name)s %(result)s: %(msg)s"
 
     def __init__(self, logging_method=_dummy_method):
         """Construct instance of the SmokeTest class.
 
-        @param logging_method: Python method that should receive a string as a
-            parameter, and logs it for further review (or it can do whatever is
-            needs to do for that matter). Optional, with dummy method which does
-            nothing.
+        @param logging_method: Python method that should receive a
+            string as a parameter, and logs it for further review (or
+            it can do whatever is needs to do for that
+            matter). Optional, with dummy method which does nothing.
 
         """
         self._status = "PASS"
         self._msg = ""
-        # We will use logging method to log failures for further failure checks.
-        self._logging_method=logging_method
+        # We will use logging method to log failures for further
+        # failure checks.
+        self._logging_method = logging_method
 
     def failed(self):
         return self._status == "FAIL"
@@ -46,9 +46,9 @@ class SmokeTest(object):
                     if self.failed():
                         failed += 1
                         msg = self._FAILED_TEST_FULL_MSG % {
-                                'method_full_name': method_full_name,
-                                'result': 'failed',
-                                'msg': self._msg
+                            'method_full_name': method_full_name,
+                            'result': 'failed',
+                            'msg': self._msg
                             }
                         failed_tests.append(msg)
                         self._logging_method(msg)
@@ -60,9 +60,9 @@ class SmokeTest(object):
                 except Exception, e:
                     errored += 1
                     msg = self._FAILED_TEST_FULL_MSG % {
-                            'method_full_name': method_full_name,
-                            'result': 'errored',
-                            'msg': str(e)
+                        'method_full_name': method_full_name,
+                        'result': 'errored',
+                        'msg': str(e)
                         }
                     errored_tests.append(msg)
                     self._logging_method(msg)
