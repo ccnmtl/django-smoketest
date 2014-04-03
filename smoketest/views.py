@@ -24,31 +24,40 @@ def test_application(app):
     failed_tests = []
     errored_tests = []
 
+    a = None
     try:
         a = importlib.import_module("%s.smoke" % app)
-        for name, obj in inspect.getmembers(a, inspect.isclass):
-            if not issubclass(obj, SmokeTest):
-                continue
-            if name == "SmokeTest":
-                # skip the parent class, which is usually imported
-                continue
-            num_test_classes += 1
-            (run, passed, failed, errored,
-             f_tests, e_tests) = test_class(obj)
-            num_tests_run += run
-            num_tests_passed += passed
-            num_tests_failed += failed
-            num_tests_errored += errored
-            failed_tests = failed_tests + f_tests
-            errored_tests = errored_tests + e_tests
-
     except ImportError:
         # no 'smokes' module for the app
         pass
-    except:
-        # anything else, probably an error in setUp()
-        # or tearDown()
+    except Exception, e:
         num_tests_errored += 1
+        errored_tests.append(
+                'Exception while importing smoke test script: %s' % e)
+
+    if a is not None:
+        e_tests = []
+        try:
+            for name, obj in inspect.getmembers(a, inspect.isclass):
+                if not issubclass(obj, SmokeTest):
+                    continue
+                if name == "SmokeTest":
+                    # skip the parent class, which is usually imported
+                    continue
+                num_test_classes += 1
+                (run, passed, failed, errored, f_tests, e_tests) = test_class(obj)
+                num_tests_run += run
+                num_tests_passed += passed
+                num_tests_failed += failed
+                num_tests_errored += errored
+                failed_tests = failed_tests + f_tests
+                errored_tests = errored_tests + e_tests
+        except Exception, e:
+            # probably an error in setUp() or tearDown()
+            num_tests_errored += 1
+            e_tests.append('Exception during test: %s' % e)
+        finally:
+            errored_tests = errored_tests + e_tests
     return ApplicationTestResultSet(
         num_test_classes, num_tests_run,
         num_tests_passed, num_tests_errored,
