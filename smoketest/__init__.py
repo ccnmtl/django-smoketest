@@ -89,7 +89,7 @@ class SmokeTest(object):
             self._msg = msg or "%s is not false" % x
 
     def assertIs(self, a, b, msg=None):
-        if not a is b:
+        if a is not b:
             self._status = "FAIL"
             self._msg = msg or "%s is not %s" % (a, b)
 
