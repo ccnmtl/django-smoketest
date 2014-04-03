@@ -33,7 +33,7 @@ def test_application(app):
     except Exception, e:
         num_tests_errored += 1
         errored_tests.append(
-                'Exception while importing smoke test script: %s' % e)
+            'Exception while importing smoke test script: %s' % e)
 
     if a is not None:
         e_tests = []
@@ -45,7 +45,8 @@ def test_application(app):
                     # skip the parent class, which is usually imported
                     continue
                 num_test_classes += 1
-                (run, passed, failed, errored, f_tests, e_tests) = test_class(obj)
+                (run, passed, failed, errored,
+                 f_tests, e_tests) = test_class(obj)
                 num_tests_run += run
                 num_tests_passed += passed
                 num_tests_failed += failed

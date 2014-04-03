@@ -183,4 +183,4 @@ class ApplicationTestResultSet(object):
 
     def passed(self):
         return self.num_tests_passed == self.num_tests_run and \
-                self.num_tests_failed == 0 and self.num_tests_errored == 0
+            self.num_tests_failed == 0 and self.num_tests_errored == 0
