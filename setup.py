@@ -5,13 +5,13 @@ ROOT = os.path.abspath(os.path.dirname(__file__))
 
 setup(
     name="django-smoketest",
-    version="0.2.2",
+    version="0.3.0",
     author="Anders Pearson",
     author_email="anders@columbia.edu",
     url="https://github.com/ccnmtl/django-smoketest",
     description="Django smoketest framework",
     long_description=open(os.path.join(ROOT, 'README.md')).read(),
-    install_requires=['Django>=1.2', 'nose'],
+    install_requires=['Django>=1.6', 'nose'],
     scripts=[],
     license="BSD",
     platforms=["any"],
