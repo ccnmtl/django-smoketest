@@ -13,4 +13,6 @@ INSTALLED_APPS = (
     'smoketest',
 )
 
+MIDDLEWARE_CLASSES = []
+
 ROOT_URLCONF = 'urls'
