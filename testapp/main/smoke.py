@@ -65,6 +65,15 @@ class TestSmokeTest(SmokeTest):
         a = "foo"
         self.assertNotIsInstance(a, SmokeTest)
 
+    def test_assertRaises(self):
+        class FooError(BaseException):
+            pass
+
+        def f():
+            raise FooError
+
+        self.assertRaises(FooError, f)
+
 
 class TestFailedSmokeTests(SmokeTest):
     CUSTOM_TEST_MSG = "Test failed as it should"

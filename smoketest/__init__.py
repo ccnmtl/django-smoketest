@@ -128,9 +128,20 @@ class SmokeTest(object):
             self._status = "FAIL"
             self._msg = msg or "%s is an instance of %s" % (a, b)
 
+    def assertRaises(self, exc_class, callable_obj, *args, **kwargs):
+        try:
+            callable_obj(*args, **kwargs)
+            self._status = "FAIL"
+            if hasattr(exc_class, '__name__'):
+                exc_name = exc_class.__name__
+            else:
+                exc_name = str(exc_class)
+            self._msg = "%s not raised" % exc_name
+        except exc_class:
+            return
+
 """
 TODO (while adding msg=None parameter to all calls and process it properly):
-assertRaises(exc, fun, *args, **kwds)	fun(*args, **kwds) raises exc
 assertRaisesRegexp(exc, re, fun, *args, **kwds)	fun(*args, **kwds)
    raises exc and the message matches re	2.7
 assertAlmostEqual(a, b)	round(a-b, 7) == 0
