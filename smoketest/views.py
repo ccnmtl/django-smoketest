@@ -13,6 +13,16 @@ def test_class(cls):
     return o.run()
 
 
+def run_single_class_test(name, obj):
+    if not issubclass(obj, SmokeTest):
+        return (0, 0, 0, 0, 0, [], [])
+    if name == "SmokeTest":
+        # skip the parent class, which is usually imported
+        return (0, 0, 0, 0, 0, [], [])
+    (run, passed, failed, errored, f_tests, e_tests) = test_class(obj)
+    return (1, run, passed, failed, errored, f_tests, e_tests)
+
+
 def test_application(app):
     """ should return an ApplicationTestResultSet """
     num_test_classes = 0
@@ -39,14 +49,9 @@ def test_application(app):
         e_tests = []
         try:
             for name, obj in inspect.getmembers(a, inspect.isclass):
-                if not issubclass(obj, SmokeTest):
-                    continue
-                if name == "SmokeTest":
-                    # skip the parent class, which is usually imported
-                    continue
-                num_test_classes += 1
-                (run, passed, failed, errored,
-                 f_tests, e_tests) = test_class(obj)
+                (classes, run, passed, failed, errored,
+                 f_tests, e_tests) = run_single_class_test(name, obj)
+                num_test_classes += classes
                 num_tests_run += run
                 num_tests_passed += passed
                 num_tests_failed += failed
