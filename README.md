@@ -3,14 +3,6 @@ django-smoketest
 
 [![Build Status](https://travis-ci.org/ccnmtl/django-smoketest.png)](https://travis-ci.org/ccnmtl/django-smoketest)
 
-PLEASE NOTE: I'm basically doing README-driven development here,
-writing documentation for how this code should work before actually
-implementing it. This notice will go away when django-smoketest is
-actually implemented and remotely suitable for real-world use. Until
-then, feel free to offer ideas on the interface, but don't expect to
-be able to use it (you can look in the "Progress" section to see
-exactly where I'm at).
-
 Motivation
 ----------
 
@@ -230,10 +222,8 @@ TODO:
 
 * @slow decorator and view
 * @rolled_back decorator
-* capture stdout/stderr
 * I think it only handles `smoke.py` files or `smoke/__init__.py` and
   won't yet find subclasses in submodules like `smoke/foo.py`.
-* report tracebacks on errors
 * setUpClass/tearDownClass
 * extended assert* methods (listed in `smoketest/__init__.py`)
 * `SMOKETEST_APPS` (and/or `SMOKETEST_SKIP_APPS`)
