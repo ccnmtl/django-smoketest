@@ -156,6 +156,16 @@ stuff there, running `setUp` and `tearDown` methods, and supporting
 the usual array of `assertEquals`, `assertRaises`, `assertTrue`
 methods.
 
+All smoketests are wrapped in a database transaction which is then
+rolled back after running. This frees you up to do potentially
+destructive things and just let the DB clean up for you. The usual
+caveats apply about making sure you are using a database that supports
+transactions and that it can only roll back database operations, not
+other side effects.
+
+NOTE: the `@slow` decorator hasn't actually been implemented yet. The
+next paragraph is just a planned feature.
+
 There is the `@slow` decorator which marks a test as potentially slow,
 or utilizing a lot of resources. Either way, it lets you have two
 different levels of smoke tests. Fast tests can be run frequently, eg,
@@ -164,13 +174,6 @@ quickly be alerted if something changes in the production
 environment. The `@slow` tests can then be reserved for only running
 after a new deploy to check things a little more deeply and have more
 confidence that everything is functional.
-
-All smoketests are wrapped in a database transaction which is then
-rolled back after running. This frees you up to do potentially
-destructive things and just let the DB clean up for you. The usual
-caveats apply about making sure you are using a database that supports
-transactions and that it can only roll back database operations, not
-other side effects.
 
 In your settings, you may define a `SMOKETEST_APPS` variable that
 lists the applications want to run smoke tests from (instead of
