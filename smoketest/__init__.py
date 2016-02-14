@@ -155,11 +155,15 @@ class SmokeTest(object):
             self._status = "FAIL"
             self._msg = msg or "%f is not greater than %f" % (a, b)
 
+    def assertGreaterEqual(self, a, b, msg=None):
+        if not (a >= b):
+            self._status = "FAIL"
+            self._msg = msg or "%f is not greater than or equal to %f" % (a, b)
+
 """
 TODO (while adding msg=None parameter to all calls and process it properly):
 assertRaisesRegexp(exc, re, fun, *args, **kwds)	fun(*args, **kwds)
    raises exc and the message matches re	2.7
-assertGreaterEqual(a, b)	a >= b	2.7
 assertLess(a, b)	a < b	2.7
 assertLessEqual(a, b)	a <= b	2.7
 assertRegexpMatches(s, re)	regex.search(s)	2.7
