@@ -202,6 +202,13 @@ Asserts supported (so far):
 * assertNotIn(a, b)
 * assertIsInstance(a, b)
 * assertNotIsInstance(a, b)
+* assertRaises(exception, function)
+* assertLess(a, b)
+* assertLessEqual(a, b)
+* assertGreater(a, b)
+* assertGreaterEqual(a, b)
+* assertAlmostEqual(a, b)
+* assertNotAlmostEqual(a, b)
 
 All call accepts custom message as the last parameter (msg) just like
 all assert calls in unittest libraries.
