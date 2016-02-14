@@ -141,15 +141,19 @@ class SmokeTest(object):
             return
 
     def assertAlmostEqual(self, a, b, places=7, msg=None):
-        if round(b - a, places) != 0:
+        if round(b - a, places) != 0.0:
             self._status = "FAIL"
             self._msg = msg or "%f is not almost equal to %f" % (a, b)
+
+    def assertNotAlmostEqual(self, a, b, places=7, msg=None):
+        if round(b - a, places) == 0.0:
+            self._status = "FAIL"
+            self._msg = msg or "%f is almost equal to %f" % (a, b)
 
 """
 TODO (while adding msg=None parameter to all calls and process it properly):
 assertRaisesRegexp(exc, re, fun, *args, **kwds)	fun(*args, **kwds)
    raises exc and the message matches re	2.7
-assertNotAlmostEqual(a, b)	round(a-b, 7) != 0
 assertGreater(a, b)	a > b	2.7
 assertGreaterEqual(a, b)	a >= b	2.7
 assertLess(a, b)	a < b	2.7
