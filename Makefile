@@ -1,4 +1,5 @@
 test:
+	rm -rf ve
 	virtualenv ve
 	./ve/bin/pip install .
 	./ve/bin/pip install flake8
