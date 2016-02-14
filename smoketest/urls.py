@@ -6,5 +6,5 @@ except ImportError:
 from .views import index
 
 urlpatterns = [
-    url(r'^$', index),
+    url(r'^$', index, name='smoketest'),
 ]
