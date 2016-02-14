@@ -103,14 +103,22 @@ time: %fms
          failed_report, errored_report)
 
 
+def skip_apps():
+    if hasattr(settings, 'SMOKETEST_SKIP_APPS'):
+        return settings.SMOKETEST_SKIP_APPS
+    return []
+
+
 class IndexView(View):
     @transaction.atomic()
     def get(self, request):
         sp1 = transaction.savepoint()
         try:
             start = time.time()
+            skip = skip_apps()
             result_sets = [test_application(app)
-                           for app in settings.INSTALLED_APPS]
+                           for app in settings.INSTALLED_APPS
+                           if app not in skip]
             finish = time.time()
             all_passed = reduce(
                 lambda x, y: x & y, [r.passed() for r in result_sets])

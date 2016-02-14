@@ -175,10 +175,10 @@ environment. The `@slow` tests can then be reserved for only running
 after a new deploy to check things a little more deeply and have more
 confidence that everything is functional.
 
-In your settings, you may define a `SMOKETEST_APPS` variable that
-lists the applications want to run smoke tests from (instead of
-looking through all your applications). (do we want a
-SMOKETEST_SKIP_APPS as well/instead?).
+By default, django-smoketest will search through all apps mentioned in
+your `INSTALLED_APPS`, looking for smoketests. If you define a
+`SMOKETEST_SKIP_APPS` setting with a list of apps, django-smoketest
+will bypass any mentioned there.
 
 Asserts supported (so far):
 
@@ -225,7 +225,6 @@ TODO:
   won't yet find subclasses in submodules like `smoke/foo.py`.
 * setUpClass/tearDownClass
 * extended assert* methods (listed in `smoketest/__init__.py`)
-* `SMOKETEST_APPS` (and/or `SMOKETEST_SKIP_APPS`)
 
 DONE:
 
@@ -240,3 +239,4 @@ DONE:
 * run tests in a rolled back transaction
 * report additional info (exception/tracebacks) on errors (Kristijan Mitrovic <kmitrovic>)
 * support messages on asserts (Kristijan Mitrovic <kmitrovic>)
+* `SMOKETEST_SKIP_APPS`
