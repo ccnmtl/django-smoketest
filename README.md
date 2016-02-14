@@ -73,7 +73,7 @@ To your `urlpatterns`.
 In your `smoke.py` (or module), you put something like this:
 
     from smoketest import SmokeTest
-    from smoketest.decorators import slow, rolled_back
+    from smoketest.decorators import slow
     from myapp.models import FooModel
     
     
@@ -83,10 +83,10 @@ In your `smoke.py` (or module), you put something like this:
             cnt = FooModel.objects.all().count()
             self.assertTrue(cnt > 0)
     
-        @rolled_back
         def test_foomodel_writes(self):
             """ make sure we can also write to the database
-            but do not leave any test detritus around.
+            but do not leave any test detritus around. Smoketests
+			are automatically rolled back.
             """
             f = FooModel.objects.create()
         
@@ -165,15 +165,12 @@ environment. The `@slow` tests can then be reserved for only running
 after a new deploy to check things a little more deeply and have more
 confidence that everything is functional.
 
-The `@rolled_back` decorator will make sure that the test gets wrapped
-in a database transaction which is then rolled back after
-running. This frees you up to do potentially destructive things and
-just let the DB clean up for you. The usual caveats apply about making sure
-you are using a database that supports transactions and that it can
-only roll back database operations, not other side effects. I'm also
-on the fence about whether this decorator should even exist or if that
-should be the default behavior for all smoke tests. Should a smoke
-test ever actually commit a transaction?
+All smoketests are wrapped in a database transaction which is then
+rolled back after running. This frees you up to do potentially
+destructive things and just let the DB clean up for you. The usual
+caveats apply about making sure you are using a database that supports
+transactions and that it can only roll back database operations, not
+other side effects.
 
 In your settings, you may define a `SMOKETEST_APPS` variable that
 lists the applications want to run smoke tests from (instead of
@@ -221,7 +218,6 @@ Progress
 TODO:
 
 * @slow decorator and view
-* @rolled_back decorator
 * I think it only handles `smoke.py` files or `smoke/__init__.py` and
   won't yet find subclasses in submodules like `smoke/foo.py`.
 * setUpClass/tearDownClass

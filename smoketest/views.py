@@ -153,5 +153,6 @@ class IndexView(View):
                     content_type="application/json",
                     )
         finally:
+            # always roll back the smoketest view
             transaction.savepoint_rollback(sp1)
         return response
