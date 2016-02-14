@@ -123,8 +123,8 @@ def index(request):
                              num_tests_passed, num_tests_failed,
                              num_tests_errored, finish, start, failed_report,
                              errored_report), content_type="text/plain")
-        if ('HTTP_ACCEPT' in request.META
-                and 'application/json' in request.META['HTTP_ACCEPT']):
+        if ('HTTP_ACCEPT' in request.META and (
+                'application/json' in request.META['HTTP_ACCEPT'])):
             response = HttpResponse(
                 json.dumps(
                     dict(
