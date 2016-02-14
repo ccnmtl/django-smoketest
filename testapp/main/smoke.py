@@ -74,6 +74,11 @@ class TestSmokeTest(SmokeTest):
 
         self.assertRaises(FooError, f)
 
+    def test_assertAlmostEqual(self):
+        a = 1.00000001
+        b = 1.00000002
+        self.assertAlmostEqual(a, b)
+
 
 class TestFailedSmokeTests(SmokeTest):
     CUSTOM_TEST_MSG = "Test failed as it should"
