@@ -1,9 +1,8 @@
 try:
-    from django.conf.urls import patterns, include
+    from django.conf.urls import include, url
 except ImportError:
-    from django.conf.urls.defaults import patterns, include
+    from django.conf.urls.defaults import include, url
 
-urlpatterns = patterns(
-    '',
-    ('^smoketest/$', include('smoketest.urls')),
-)
+urlpatterns = [
+    url('^smoketest/$', include('smoketest.urls')),
+]
