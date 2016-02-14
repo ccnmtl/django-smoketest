@@ -90,6 +90,12 @@ class TestSmokeTest(SmokeTest):
     def test_assertGreaterEqual(self):
         self.assertGreaterEqual(1.5, 1.5)
 
+    def test_assertLess(self):
+        self.assertLess(1.5, 1.6)
+
+    def test_assertLessEqual(self):
+        self.assertLessEqual(1.5, 1.5)
+
 
 class TestFailedSmokeTests(SmokeTest):
     CUSTOM_TEST_MSG = "Test failed as it should"
