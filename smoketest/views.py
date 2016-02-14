@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import transaction
 from django.http import HttpResponse
+from django.views.generic import View
 import json
 import inspect
 import importlib
@@ -102,51 +103,55 @@ time: %fms
          failed_report, errored_report)
 
 
-@transaction.atomic()
-def index(request):
-    sp1 = transaction.savepoint()
-    try:
-        start = time.time()
-        result_sets = [test_application(app)
-                       for app in settings.INSTALLED_APPS]
-        finish = time.time()
-        all_passed = reduce(
-            lambda x, y: x & y, [r.passed() for r in result_sets])
-        num_test_classes = sum([r.num_test_classes for r in result_sets])
-        num_tests_run = sum([r.num_tests_run for r in result_sets])
-        num_tests_passed = sum([r.num_tests_passed for r in result_sets])
-        num_tests_failed = sum([r.num_tests_failed for r in result_sets])
-        num_tests_errored = sum([r.num_tests_errored for r in result_sets])
-        failed_report = make_failed_report(result_sets)
-        errored_report = make_errored_report(result_sets)
-        if all_passed:
-            status = "PASS"
-        else:
-            status = "FAIL"
-        response = HttpResponse(
-            plaintext_output(status, num_test_classes, num_tests_run,
-                             num_tests_passed, num_tests_failed,
-                             num_tests_errored, finish, start, failed_report,
-                             errored_report), content_type="text/plain")
-        if ('HTTP_ACCEPT' in request.META and (
-                'application/json' in request.META['HTTP_ACCEPT'])):
+class IndexView(View):
+    @transaction.atomic()
+    def get(self, request):
+        sp1 = transaction.savepoint()
+        try:
+            start = time.time()
+            result_sets = [test_application(app)
+                           for app in settings.INSTALLED_APPS]
+            finish = time.time()
+            all_passed = reduce(
+                lambda x, y: x & y, [r.passed() for r in result_sets])
+            num_test_classes = sum([r.num_test_classes for r in result_sets])
+            num_tests_run = sum([r.num_tests_run for r in result_sets])
+            num_tests_passed = sum([r.num_tests_passed for r in result_sets])
+            num_tests_failed = sum([r.num_tests_failed for r in result_sets])
+            num_tests_errored = sum([r.num_tests_errored for r in result_sets])
+            failed_report = make_failed_report(result_sets)
+            errored_report = make_errored_report(result_sets)
+            if all_passed:
+                status = "PASS"
+            else:
+                status = "FAIL"
             response = HttpResponse(
-                json.dumps(
-                    dict(
-                        status=status,
-                        test_classes=num_test_classes,
-                        tests_run=num_tests_run,
-                        tests_passed=num_tests_passed,
-                        tests_failed=num_tests_failed,
-                        tests_errored=num_tests_errored,
-                        failed_tests=reduce(lambda x, y: x + y,
-                                            [r.failed for r in result_sets]),
-                        errored_tests=reduce(lambda x, y: x + y,
-                                             [r.errored for r in result_sets]),
-                        time=(finish - start) * 1000,
-                        )),
-                content_type="application/json",
-                )
-    finally:
-        transaction.savepoint_rollback(sp1)
-    return response
+                plaintext_output(status, num_test_classes, num_tests_run,
+                                 num_tests_passed, num_tests_failed,
+                                 num_tests_errored, finish, start,
+                                 failed_report, errored_report),
+                content_type="text/plain")
+            if ('HTTP_ACCEPT' in request.META and (
+                    'application/json' in request.META['HTTP_ACCEPT'])):
+                response = HttpResponse(
+                    json.dumps(
+                        dict(
+                            status=status,
+                            test_classes=num_test_classes,
+                            tests_run=num_tests_run,
+                            tests_passed=num_tests_passed,
+                            tests_failed=num_tests_failed,
+                            tests_errored=num_tests_errored,
+                            failed_tests=reduce(
+                                lambda x, y: x + y,
+                                [r.failed for r in result_sets]),
+                            errored_tests=reduce(
+                                lambda x, y: x + y,
+                                [r.errored for r in result_sets]),
+                            time=(finish - start) * 1000,
+                            )),
+                    content_type="application/json",
+                    )
+        finally:
+            transaction.savepoint_rollback(sp1)
+        return response

@@ -3,8 +3,8 @@ try:
 except ImportError:
     from django.conf.urls.defaults import url
 
-from .views import index
+from .views import IndexView
 
 urlpatterns = [
-    url(r'^$', index, name='smoketest'),
+    url(r'^$', IndexView.as_view(), name='smoketest'),
 ]
