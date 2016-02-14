@@ -84,6 +84,9 @@ class TestSmokeTest(SmokeTest):
         b = 1.000002
         self.assertNotAlmostEqual(a, b)
 
+    def test_assertGreater(self):
+        self.assertGreater(1.5, 1.4)
+
 
 class TestFailedSmokeTests(SmokeTest):
     CUSTOM_TEST_MSG = "Test failed as it should"
