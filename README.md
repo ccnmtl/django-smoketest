@@ -73,7 +73,6 @@ To your `urlpatterns`.
 In your `smoke.py` (or module), you put something like this:
 
     from smoketest import SmokeTest
-    from smoketest.decorators import slow
     from myapp.models import FooModel
     
     
@@ -90,22 +89,10 @@ In your `smoke.py` (or module), you put something like this:
             """
             f = FooModel.objects.create()
         
-        @slow
-        def test_something_slow(self):
-            """ this test will not be run in "fast" mode
-            because it uses a lot of resources or otherwise
-            could bog down the production server in bad ways
-            """
-            # do a bunch of slow stuff
-            # ...
-            self.assertEqual(foo, bar)
-
 Now, if you make a `GET` to `http://yourapp/smoketest/`,
 django-smoketest will go through your code, finding any `smoke`
 modules, and run the tests you have defined (if you've used unittest
-or nose, you get the idea), excluding any marked with the `@slow`
-decorator. `GET`ing `http://yourapp/smoketest/slow/` will include
-those tests as well. All tests passing will result in a response like:
+or nose, you get the idea):
 
     PASS
     test classes: 1
@@ -163,18 +150,6 @@ caveats apply about making sure you are using a database that supports
 transactions and that it can only roll back database operations, not
 other side effects.
 
-NOTE: the `@slow` decorator hasn't actually been implemented yet. The
-next paragraph is just a planned feature.
-
-There is the `@slow` decorator which marks a test as potentially slow,
-or utilizing a lot of resources. Either way, it lets you have two
-different levels of smoke tests. Fast tests can be run frequently, eg,
-from a monitoring script that hits it every five minutes so you can
-quickly be alerted if something changes in the production
-environment. The `@slow` tests can then be reserved for only running
-after a new deploy to check things a little more deeply and have more
-confidence that everything is functional.
-
 By default, django-smoketest will search through all apps mentioned in
 your `INSTALLED_APPS`, looking for smoketests. If you define a
 `SMOKETEST_SKIP_APPS` setting with a list of apps, django-smoketest
@@ -220,7 +195,6 @@ Progress
 
 TODO:
 
-* @slow decorator and view
 * I think it only handles `smoke.py` files or `smoke/__init__.py` and
   won't yet find subclasses in submodules like `smoke/foo.py`.
 * setUpClass/tearDownClass
