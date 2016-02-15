@@ -32,7 +32,7 @@ class BasicTest(TestCase):
 
     def test_basics(self):
         response = self.c.get("/smoketest/")
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 500)
 
         self.assertIn("FAIL", response.content)
         # only tests from TestFailedSmokeTests should fail

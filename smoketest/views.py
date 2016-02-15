@@ -129,15 +129,19 @@ class IndexView(View):
             num_tests_errored = sum([r.num_tests_errored for r in result_sets])
             failed_report = make_failed_report(result_sets)
             errored_report = make_errored_report(result_sets)
+            http_status = 500
             if all_passed:
                 status = "PASS"
+                http_status = 200
             else:
                 status = "FAIL"
             response = HttpResponse(
-                plaintext_output(status, num_test_classes, num_tests_run,
-                                 num_tests_passed, num_tests_failed,
-                                 num_tests_errored, finish, start,
-                                 failed_report, errored_report),
+                status=http_status,
+                content=plaintext_output(
+                    status, num_test_classes, num_tests_run,
+                    num_tests_passed, num_tests_failed,
+                    num_tests_errored, finish, start,
+                    failed_report, errored_report),
                 content_type="text/plain")
             if ('HTTP_ACCEPT' in request.META and (
                     'application/json' in request.META['HTTP_ACCEPT'])):

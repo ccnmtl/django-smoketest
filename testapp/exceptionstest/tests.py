@@ -18,7 +18,7 @@ class ExceptionsTest(TestCase):
 
     def test_exceptions(self):
         response = self.c.get("/smoketest/")
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 500)
         self.assertIn("FAIL", response.content)
         self.assertIn(
                 "Exception while importing smoke test script: %s" % EXC_MSG,
