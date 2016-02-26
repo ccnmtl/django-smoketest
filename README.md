@@ -2,6 +2,7 @@ django-smoketest
 ================
 
 [![Build Status](https://travis-ci.org/ccnmtl/django-smoketest.png)](https://travis-ci.org/ccnmtl/django-smoketest)
+[![Coverage Status](https://coveralls.io/repos/github/ccnmtl/django-smoketest/badge.svg?branch=master)](https://coveralls.io/github/ccnmtl/django-smoketest?branch=master)
 
 Motivation
 ----------
