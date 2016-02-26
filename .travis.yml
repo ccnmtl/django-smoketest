@@ -9,6 +9,6 @@ install:
 script:
   - flake8 smoketest
   - cd testapp && python manage.py test
-  - cd testapp && coverage run --source=../smoketest manage.py test
+  - coverage run --source=../smoketest manage.py test
 after_success:
   - coveralls
