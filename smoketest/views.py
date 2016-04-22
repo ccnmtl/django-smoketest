@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import transaction
 from django.http import HttpResponse
 from django.views.generic import View
+import functools
 import json
 import inspect
 import importlib
@@ -41,7 +42,7 @@ def test_application(app):
     except ImportError:
         # no 'smokes' module for the app
         pass
-    except Exception, e:
+    except Exception as e:
         num_tests_errored += 1
         errored_tests.append(
             'Exception while importing smoke test script: %s' % e)
@@ -59,7 +60,7 @@ def test_application(app):
                 num_tests_errored += errored
                 failed_tests = failed_tests + f_tests
                 errored_tests = errored_tests + e_tests
-        except Exception, e:
+        except Exception as e:
             # probably an error in setUp() or tearDown()
             num_tests_errored += 1
             e_tests.append('Exception during test: %s' % e)
@@ -74,13 +75,13 @@ def test_application(app):
 
 def make_failed_report(result_sets):
     return "\n\n".join(
-        [f for f in reduce(
+        [f for f in functools.reduce(
             lambda x, y: x + y, [r.failed for r in result_sets])])
 
 
 def make_errored_report(result_sets):
     return "\n\n".join(
-        [f for f in reduce(
+        [f for f in functools.reduce(
             lambda x, y: x + y, [r.errored for r in result_sets])])
 
 
@@ -120,7 +121,7 @@ class IndexView(View):
                            for app in settings.INSTALLED_APPS
                            if app not in skip]
             finish = time.time()
-            all_passed = reduce(
+            all_passed = functools.reduce(
                 lambda x, y: x & y, [r.passed() for r in result_sets])
             num_test_classes = sum([r.num_test_classes for r in result_sets])
             num_tests_run = sum([r.num_tests_run for r in result_sets])
@@ -154,10 +155,10 @@ class IndexView(View):
                             tests_passed=num_tests_passed,
                             tests_failed=num_tests_failed,
                             tests_errored=num_tests_errored,
-                            failed_tests=reduce(
+                            failed_tests=functools.reduce(
                                 lambda x, y: x + y,
                                 [r.failed for r in result_sets]),
-                            errored_tests=reduce(
+                            errored_tests=functools.reduce(
                                 lambda x, y: x + y,
                                 [r.errored for r in result_sets]),
                             time=(finish - start) * 1000,

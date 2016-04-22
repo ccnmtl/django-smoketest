@@ -57,7 +57,7 @@ class SmokeTest(object):
                         passed += 1
                     if hasattr(self, 'tearDown'):
                         self.tearDown()
-                except Exception, e:
+                except Exception as e:
                     errored += 1
                     msg = self._FAILED_TEST_FULL_MSG % {
                         'method_full_name': method_full_name,
