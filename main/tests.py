@@ -1,10 +1,13 @@
+from __future__ import unicode_literals
+
 import json
 
 from django.conf import settings
 from django.test import TestCase
 from django.test.client import Client
+from django.utils.encoding import smart_text
 
-from smoke import TestFailedSmokeTests
+from main.smoke import TestFailedSmokeTests
 from smoketest import SmokeTest
 
 
@@ -19,9 +22,8 @@ class BasicTest(TestCase):
         def test_with_exception(self):
             raise Exception(BasicTest._EXC_MSG)
         def dir(self):
-            """ Overvrite dir method so test_fail would be before
+            """ Overwrite dir method so test_fail would be before
             test_with_exception for sure.
-
             """
             return ['test_fail', 'test_with_exception']
 
@@ -34,20 +36,20 @@ class BasicTest(TestCase):
         response = self.c.get("/smoketest/")
         self.assertEqual(response.status_code, 500)
 
-        self.assertIn("FAIL", response.content)
+        self.assertIn("FAIL", smart_text(response.content))
         # only tests from TestFailedSmokeTests should fail
-        self.assertNotIn(".SmokeTest.", response.content)
+        self.assertNotIn(".SmokeTest.", smart_text(response.content))
         # and both tests from TestFailedSmokeTests should fail
-        self.assertIn("tests failed: 2\n", response.content)
-        self.assertIn("tests errored: 0\n", response.content)
+        self.assertIn("tests failed: 2\n", smart_text(response.content))
+        self.assertIn("tests errored: 0\n", smart_text(response.content))
         self.assertIn(
             (".TestFailedSmokeTests.test_assertTrueWoMsg "
              "failed: False is not true"),
-            response.content)
+            smart_text(response.content))
         self.assertIn(
             ".TestFailedSmokeTests.test_assertEqualWMsg failed: %s" %
             TestFailedSmokeTests.CUSTOM_TEST_MSG,
-            response.content)
+            smart_text(response.content))
 
     def test_json(self):
         " Testing JSON response. "
@@ -55,7 +57,7 @@ class BasicTest(TestCase):
         response = self.c.get("/smoketest/", HTTP_ACCEPT=json_content_type)
         self.assertEqual(json_content_type, response.get('Content-Type', None))
 
-        response_obj = json.loads(response.content)
+        response_obj = json.loads(smart_text(response.content))
         self.assertEqual('FAIL', response_obj['status'])
         self.assertEqual(2, response_obj['tests_failed'])
         self.assertEqual(0, response_obj['tests_errored'])

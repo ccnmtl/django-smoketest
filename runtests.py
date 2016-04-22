@@ -5,7 +5,7 @@ $ ./ve/bin/pip install Django==1.8
 $ ./ve/bin/pip install -r test_reqs.txt
 $ ./ve/bin/python runtests.py
 """
-
+from __future__ import unicode_literals
 
 import django
 from django.conf import settings
