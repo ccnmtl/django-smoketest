@@ -170,6 +170,7 @@ class SmokeTest(object):
             self._status = "FAIL"
             self._msg = msg or "%f is not less than or equal to %f" % (a, b)
 
+
 """
 TODO (while adding msg=None parameter to all calls and process it properly):
 assertRaisesRegexp(exc, re, fun, *args, **kwds)	fun(*args, **kwds)
