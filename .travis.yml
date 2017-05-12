@@ -1,20 +1,29 @@
 language: python
-sudo: False
+sudo: false
 python:
-  - "2.7"
-  - "3.5"
+- '2.7'
+- '3.5'
 env:
-  - DJANGO="Django>=1.8.0,<1.9.0"
-  - DJANGO="Django>=1.9.0,<1.10.0"
-  - DJANGO="Django>=1.10,<1.11.0"
-  - DJANGO="Django>=1.11,<1.12.0"
+- DJANGO="Django>=1.8.0,<1.9.0"
+- DJANGO="Django>=1.9.0,<1.10.0"
+- DJANGO="Django>=1.10,<1.11.0"
+- DJANGO="Django>=1.11,<1.12.0"
 install:
-  - pip install .
-  - pip install flake8
-  - pip install coveralls
+- pip install .
+- pip install flake8
+- pip install coveralls
 script:
-  - flake8 smoketest
-  - python runtests.py
-  - coverage run --source=smoketest runtests.py
+- flake8 smoketest
+- python runtests.py
+- coverage run --source=smoketest runtests.py
 after_success:
-  - coveralls
+- coveralls
+deploy:
+  provider: pypi
+  user: ctlpypi
+  password:
+    secure: jjlFgnPwHhw1t7nPiR9i4/G8IZ7Wdijlo2oB4ezTD2rPO8xDuLSGDs/m+6L5PDQDu6/Y+sB+HeHcQsHU4NBchBsbdvIOCc/D1RzDU0shlhQPWj/wtzFTPJQsvIdNEpe9qZ3QSQsGlmiKDL/x/lwtpXAHdgufgTXeHf3Y5HoNdAE=
+  on:
+    tags: true
+    distributions: sdist bdist_wheel
+    repo: ccnmtl/django-smoketest
