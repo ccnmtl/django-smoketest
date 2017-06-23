@@ -11,12 +11,11 @@ setup(
     url="https://github.com/ccnmtl/django-smoketest",
     description="Django smoketest framework",
     long_description=open(os.path.join(ROOT, 'README.md')).read(),
-    install_requires=['Django>=1.8', 'nose'],
+    install_requires=['Django>=1.8'],
     scripts=[],
     license="BSD",
     platforms=["any"],
     zip_safe=False,
     package_data = {'': ['*.*']},
     packages=['smoketest'],
-    test_suite='nose.collector',
 )
