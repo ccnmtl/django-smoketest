@@ -7,7 +7,7 @@ setup(
     name="django-smoketest",
     version="1.1.0",
     author="Anders Pearson",
-    author_email="anders@columbia.edu",
+    author_email="ccnmtl-dev@columbia.edu",
     url="https://github.com/ccnmtl/django-smoketest",
     description="Django smoketest framework",
     long_description=open(os.path.join(ROOT, 'README.md')).read(),
