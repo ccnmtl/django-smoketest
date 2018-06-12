@@ -16,7 +16,7 @@ install:
 - pip install flake8
 - pip install coveralls
 script:
-- flake8 smoketest
+- flake8 smoketest exceptionstest main testapp
 - python runtests.py
 - coverage run --source=smoketest runtests.py
 after_success:
