@@ -16,15 +16,16 @@ class BasicTest(TestCase):
     class TestWithException(SmokeTest):
         def test_fail(self):
             self.assertTrue(False, BasicTest._FAIL_MSG)
+
         def test_with_exception(self):
             raise Exception(BasicTest._EXC_MSG)
+
         def dir(self):
             """ Overvrite dir method so test_fail would be before
             test_with_exception for sure.
 
             """
             return ['test_fail', 'test_with_exception']
-
 
     def setUp(self):
         settings.INSTALLED_APPS = ('main', 'smoketest')
@@ -52,6 +53,10 @@ class BasicTest(TestCase):
             TestFailedSmokeTests.CUSTOM_TEST_MSG,
             response.content.decode('utf-8'))
 
+    def test_extendable(self):
+        response = self.c.get("/extendable/")
+        self.assertEqual(response.status_code, 500)
+
     def test_json(self):
         " Testing JSON response. "
         json_content_type = 'application/json'
@@ -77,7 +82,6 @@ class BasicTest(TestCase):
             TestFailedSmokeTests.CUSTOM_TEST_MSG,
             response_obj['failed_tests'])
 
-
     def test_error(self):
         " Tests the error case (when we got exception during the smoke test). "
         test = self.TestWithException()
@@ -86,14 +90,14 @@ class BasicTest(TestCase):
         self.assertEqual(1, errored)
         self.assertEqual(errored, len(e_tests))
         self.assertIn(
-                "TestWithException.test_with_exception errored: %s" %
-                        BasicTest._EXC_MSG,
-                e_tests[0])
+            "TestWithException.test_with_exception errored: %s" %
+            BasicTest._EXC_MSG,
+            e_tests[0])
         self.assertNotIn(BasicTest._FAIL_MSG, e_tests[0])
 
-
     def test_logging(self):
-        " On failure and on errors, messages should be logged by setup method. "
+        """ On failure and on errors, messages should be logged by setup method.
+        """
         _logged_msgs = []
 
         def logger_mock(msg):
@@ -108,13 +112,13 @@ class BasicTest(TestCase):
 
         TestForLogging().run()
 
-        # After this, both fail and error message should be logged (should be in
-        # _looged_msgs array).
+        # After this, both fail and error message should be logged
+        # (should be in _looged_msgs array).
         self.assertEqual(2, len(_logged_msgs))
         # As stated in TestWithException, the fake test will be the first for
         # sure.
         self.assertIn(BasicTest._FAIL_MSG, _logged_msgs[0])
         self.assertIn(
-                "TestForLogging.test_with_exception errored: %s" %
-                        BasicTest._EXC_MSG,
-                _logged_msgs[1])
+            "TestForLogging.test_with_exception errored: %s" %
+            BasicTest._EXC_MSG,
+            _logged_msgs[1])
