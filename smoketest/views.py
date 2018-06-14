@@ -7,7 +7,7 @@ import json
 import inspect
 import importlib
 import time
-from smoketest import SmokeTest, ApplicationTestResultSet
+from . import SmokeTest, ApplicationTestResultSet
 
 
 def test_class(cls):
