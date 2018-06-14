@@ -113,7 +113,7 @@ class BasicTest(TestCase):
         TestForLogging().run()
 
         # After this, both fail and error message should be logged
-        # (should be in _looged_msgs array).
+        # (should be in _logged_msgs array).
         self.assertEqual(2, len(_logged_msgs))
         # As stated in TestWithException, the fake test will be the first for
         # sure.
