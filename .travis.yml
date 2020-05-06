@@ -25,12 +25,3 @@ script:
 - coverage run --source=smoketest runtests.py
 after_success:
 - coveralls
-deploy:
-  provider: pypi
-  distributions: "sdist bdist_wheel"
-  user: ctlpypi
-  password:
-    secure: jjlFgnPwHhw1t7nPiR9i4/G8IZ7Wdijlo2oB4ezTD2rPO8xDuLSGDs/m+6L5PDQDu6/Y+sB+HeHcQsHU4NBchBsbdvIOCc/D1RzDU0shlhQPWj/wtzFTPJQsvIdNEpe9qZ3QSQsGlmiKDL/x/lwtpXAHdgufgTXeHf3Y5HoNdAE=
-  on:
-    tags: true
-    repo: ccnmtl/django-smoketest
