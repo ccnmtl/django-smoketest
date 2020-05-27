@@ -10,6 +10,7 @@ setup(
     author_email="ctl-dev@columbia.edu",
     url="https://github.com/ccnmtl/django-smoketest",
     description="Django smoketest framework",
+    long_description_content_type='text/markdown',
     long_description=open(os.path.join(ROOT, 'README.md')).read(),
     install_requires=['Django>=1.8'],
     scripts=[],
