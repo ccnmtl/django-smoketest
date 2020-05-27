@@ -1,1 +1,3 @@
+recursive-include smoketest
+include CHANGES.txt
 include README.md

@@ -116,12 +116,12 @@ class SmokeTest(object):
     def assertNotIn(self, a, b, msg=None):
         if a in b:
             self._status = "FAIL"
-            self._msg = msg or "%a is in %b" % (a, b)
+            self._msg = msg or "{} is in {}".format(a, b)
 
     def assertIsInstance(self, a, b, msg=None):
         if not isinstance(a, b):
             self._status = "FAIL"
-            self._msg = msg or "%a is not an instance of %s" % (a, b)
+            self._msg = msg or "{} is not an instance of {}".format(a, b)
 
     def assertNotIsInstance(self, a, b, msg=None):
         if isinstance(a, b):

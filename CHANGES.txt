@@ -1,0 +1,6 @@
+1.1.2 (2020-05-26)
+==================
+* Don't require nose for testing
+* Fix version in setup.py
+* Fix manifest file to include everything
+* Fix some flake8 errors on string format variables
