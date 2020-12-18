@@ -59,7 +59,7 @@ Install django-smoketest
 
     $ pip install django-smoketest
 
-Add `smoketest` to your `INSTALLED_APPLICATIONS`.
+Add `smoketest` to your `INSTALLED_APPS`.
 
 In each application of yours that you want to define smoke tests for,
 make a `smoke.py` file or a `smoke` directory with an
