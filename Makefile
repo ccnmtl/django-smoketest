@@ -6,7 +6,7 @@
 VE ?= ./ve
 SYS_PYTHON ?= python3
 PY_SENTINAL ?= $(VE)/sentinal
-PIP_VERSION ?= 19.3.1
+PIP_VERSION ?= 21.0.1
 MAX_COMPLEXITY ?= 9
 INTERFACE ?= localhost
 RUNSERVER_PORT ?= 8000
