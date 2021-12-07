@@ -1,10 +1,7 @@
-try:
-    from django.conf.urls import url
-except ImportError:
-    from django.conf.urls.defaults import url
+from django.urls import path
 
 from .views import IndexView
 
 urlpatterns = [
-    url(r'^$', IndexView.as_view(), name='smoketest'),
+    path('', IndexView.as_view(), name='smoketest'),
 ]
