@@ -2,10 +2,15 @@ name: build-and-test
 on: [push, workflow_dispatch]
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     strategy:
       matrix:
-          python-version: [3.6]
+          python-version: [3.8]
+          tox-env:
+            - py3-django2
+            - py3-django3
+            - py3-django4
+            - flake8
     steps:
       - uses: actions/checkout@v2
 
@@ -15,4 +20,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Build and Test
-        run: make
+        run: |
+          python -m pip install --upgrade pip
+          pip install tox
+          tox -e ${{ matrix.tox-env }}

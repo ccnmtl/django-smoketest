@@ -25,6 +25,7 @@ def main():
 
         COVERAGE_EXCLUDES_FOLDERS=['migrations'],
         ROOT_URLCONF='testapp.urls',
+        SECRET_KEY='dummy',
 
         PROJECT_APPS=[
             'smoketest',
@@ -44,6 +45,7 @@ def main():
 
     django.setup()
 
+    call_command('check')
     # Fire off the tests
     call_command('test')
 
