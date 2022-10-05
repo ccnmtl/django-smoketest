@@ -164,6 +164,7 @@ class IndexView(View):
                             time=(finish - start) * 1000,
                             )),
                     content_type="application/json",
+                    status=http_status,
                     )
         finally:
             # always roll back the smoketest view

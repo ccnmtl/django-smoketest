@@ -61,6 +61,7 @@ class BasicTest(TestCase):
         " Testing JSON response. "
         json_content_type = 'application/json'
         response = self.c.get("/smoketest/", HTTP_ACCEPT=json_content_type)
+        self.assertEqual(response.status_code, 500)
         self.assertEqual(json_content_type, response.get('Content-Type', None))
 
         response_obj = json.loads(response.content.decode('utf-8'))
