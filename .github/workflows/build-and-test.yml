@@ -7,7 +7,6 @@ jobs:
       matrix:
           python-version: [3.8]
           tox-env:
-            - py3-django2
             - py3-django3
             - py3-django4
             - flake8
