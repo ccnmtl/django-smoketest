@@ -33,7 +33,7 @@ class BasicTest(TestCase):
 
     def test_basics(self):
         response = self.c.get("/smoketest/")
-        self.assertEqual(response.status_code, 500)
+        self.assertEqual(500, response.status_code)
 
         self.assertIn("FAIL", response.content.decode('utf-8'))
         # only tests from TestFailedSmokeTests should fail
@@ -55,12 +55,13 @@ class BasicTest(TestCase):
 
     def test_extendable(self):
         response = self.c.get("/extendable/")
-        self.assertEqual(response.status_code, 500)
+        self.assertEqual(500, response.status_code)
 
     def test_json(self):
         " Testing JSON response. "
         json_content_type = 'application/json'
         response = self.c.get("/smoketest/", HTTP_ACCEPT=json_content_type)
+        self.assertEqual(500, response.status_code)
         self.assertEqual(json_content_type, response.get('Content-Type', None))
 
         response_obj = json.loads(response.content.decode('utf-8'))
