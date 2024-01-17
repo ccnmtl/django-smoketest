@@ -12,7 +12,7 @@ setup(
     description="Django smoketest framework",
     long_description_content_type='text/markdown',
     long_description=open(os.path.join(ROOT, 'README.md')).read(),
-    install_requires=['Django>=1.8'],
+    install_requires=['Django>=3.2'],
     scripts=[],
     license="BSD",
     platforms=["any"],
