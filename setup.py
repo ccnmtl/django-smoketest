@@ -5,7 +5,7 @@ ROOT = os.path.abspath(os.path.dirname(__file__))
 
 setup(
     name="django-smoketest",
-    version="1.2.1",
+    version="1.2.2",
     author="Anders Pearson",
     author_email="ctl-dev@columbia.edu",
     url="https://github.com/ccnmtl/django-smoketest",

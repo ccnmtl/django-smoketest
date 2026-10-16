@@ -1,4 +1,4 @@
-Unreleased
+1.2.2 (2026-10-16)
 ==================
 * Drop support for Django 3.x; require Django>=4.0
 * Add Django 6.1 to the test matrix
