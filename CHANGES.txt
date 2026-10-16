@@ -1,3 +1,8 @@
+Unreleased
+==================
+* Add Django 6.1 to the test matrix
+* Use savepoint_create() when available (Django 6.1 deprecates savepoint())
+
 1.2.1 (2023-08-10)
 ==================
 * add app_name to urls

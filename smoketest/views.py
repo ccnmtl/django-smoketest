@@ -9,6 +9,11 @@ import importlib
 import time
 from . import SmokeTest, ApplicationTestResultSet
 
+# Django 6.1 renamed savepoint() to savepoint_create() and deprecated the old
+# name. Fall back for older Django versions.
+savepoint_create = getattr(
+    transaction, 'savepoint_create', transaction.savepoint)
+
 
 def test_class(cls):
     o = cls()
@@ -113,7 +118,7 @@ def skip_apps():
 class IndexView(View):
     @transaction.atomic()
     def get(self, request):
-        sp1 = transaction.savepoint()
+        sp1 = savepoint_create()
         try:
             start = time.time()
             skip = skip_apps()
