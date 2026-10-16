@@ -10,9 +10,6 @@ jobs:
           - py3-django4
           - py3-django5
           - flake8
-        exclude:
-          - python-version: '3.12'
-            tox-env: 'py3-django3'
     steps:
       - uses: actions/checkout@v4
 
