@@ -1,5 +1,6 @@
 Unreleased
 ==================
+* Drop support for Django 3.x; require Django>=4.0
 * Add Django 6.1 to the test matrix
 * Use savepoint_create() when available (Django 6.1 deprecates savepoint())
 

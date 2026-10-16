@@ -1,7 +1,7 @@
 """ run tests for django-smoketest
 
 $ virtualenv ve
-$ ./ve/bin/pip install Django==1.8
+$ ./ve/bin/pip install Django==4.2
 $ ./ve/bin/pip install -r test_reqs.txt
 $ ./ve/bin/python runtests.py
 """
