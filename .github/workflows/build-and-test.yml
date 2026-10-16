@@ -9,17 +9,18 @@ jobs:
         tox-env:
           - py3-django4
           - py3-django5
+          - py3-django61
           - flake8
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: ${{ matrix.python-version }}
 
       - name: Build and Test
         run: |
-          python -m pip install --upgrade pip setuptools
+          python -m pip install --upgrade pip
           pip install tox==4.11.4
           tox -e ${{ matrix.tox-env }}
